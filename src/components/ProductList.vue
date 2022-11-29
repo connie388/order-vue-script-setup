@@ -101,11 +101,15 @@ function setNewRecord() {
 }
 
 function searchByProductLine(option) {
-  products.value = [];
   searchProductLine.value = option.key;
+  findByProductLine();
+}
+
+function findByProductLine() {
+  products.value = [];
   reset.value = !reset.value;
   createEndpoint(ENDPOINTS.PRODUCT)
-    .fetchAllByCategory(option.key)
+    .fetchAllByCategory(searchProductLine.value)
     .then((res) => {
       for (let record in res.data) {
         var tempProduct = {
@@ -125,7 +129,7 @@ function deleteProduct() {
       console.log(res.data);
       msg.value = "Record deleted successfully!";
       currentProductCode.value = null;
-      if (searchProductLine.value) searchByProductLine(searchProductLine.value);
+      if (searchProductLine.value) findByProductLine();
     })
     .catch((err) => console.log(err));
 }
@@ -137,7 +141,7 @@ function updateProductData(form) {
     productName: form.productName,
     productScale: form.productScale,
     productVendor: form.productVendor,
-    productDesc: form.productDesc,
+    productDescription: form.productDescription,
     quantityInStock: form.quantityInStock,
     buyPrice: form.buyPrice,
     msrp: form.msrp,
@@ -158,7 +162,7 @@ function addProductData(form) {
     productName: form.productName,
     productScale: form.productScale,
     productVendor: form.productVendor,
-    productDesc: form.productDesc,
+    productDescription: form.productDescription,
     quantityInStock: form.quantityInStock,
     buyPrice: form.buyPrice,
     msrp: form.msrp,
@@ -168,7 +172,7 @@ function addProductData(form) {
     .create(data)
     .then((res) => {
       console.log(res.data);
-      if (searchProductLine.value) searchByProductLine(searchProductLine.value);
+      if (searchProductLine.value) findByProductLine();
       msg.value = "Record added successfully!";
       newRecord.value = false;
     })

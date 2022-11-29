@@ -44,9 +44,9 @@
     />
 
     <BaseTextArea
-      id="productDesc"
+      id="productDescription"
       label="Product Description"
-      v-model="form.productDesc"
+      v-model="form.productDescription"
     />
 
     <BaseInput
@@ -57,7 +57,7 @@
 
     <BaseInput id="buyPrice" label="Buy Price" v-model="form.buyPrice" />
 
-    <BaseInput id="msrp" label="MSRP" v-model="form.msrp" />
+    <BaseInput id="msrp" label="msrp" v-model="form.msrp" />
     <BaseButton @click="onsubmit" label="Submit" />
   </form>
 </template>
@@ -83,7 +83,7 @@ let form = ref({
   productName: "",
   productScale: "",
   productVendor: "",
-  productDesc: "",
+  productDescription: "",
   buyPrice: null,
   quantityInStock: null,
   msrp: null,
@@ -117,14 +117,14 @@ function onsubmit(e) {
   if (!form.value.productVendor) {
     errors.value.push("Product Vendor required.");
   }
-  if (!form.value.productDesc) {
+  if (!form.value.productDescription) {
     errors.value.push("Product Description required.");
   }
   if (!form.value.buyPrice) {
     errors.value.push("Product Buy Price required.");
   }
   if (!form.value.msrp) {
-    errors.value.push("MSRP required.");
+    errors.value.push("msrp required.");
   }
   if (!form.value.quantityInStock) {
     errors.value.push("Quantity In Stock required.");
@@ -156,16 +156,17 @@ function getProduct() {
   createEndpoint(ENDPOINTS.PRODUCT)
     .fetchById(props.productCode)
     .then((res) => {
+      console.log(res.data);
       form.value.productLine = res.data.productLine;
       form.value.selectedOption = res.data.productLine;
       form.value.productCode = res.data.productCode;
       form.value.productName = res.data.productName;
       form.value.productScale = res.data.productScale;
       form.value.productVendor = res.data.productVendor;
-      form.value.productDesc = res.data.productDesc;
+      form.value.productDescription = res.data.productDescription;
       form.value.buyPrice = res.data.buyPrice;
       form.value.quantityInStock = res.data.quantityInStock;
-      form.value.msrp = res.data.msrp;
+      form.value.msrp = res.data.msrp || res.data.msrp;
     })
     .catch((err) => console.log(err));
 }

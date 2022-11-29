@@ -16,15 +16,15 @@
     />
 
     <BaseTextArea
-      id="textDesc"
+      id="textDescription"
       label="Text Description"
-      v-model="form.textDesc"
+      v-model="form.textDescription"
     />
 
     <BaseTextArea
-      id="htmlDesc"
+      id="htmlDescription"
       label="HTML Description"
-      v-model="form.htmlDesc"
+      v-model="form.htmlDescription"
     />
 
     <BaseInput id="image" label="Image URL" v-model="form.imageUrl"/>
@@ -48,7 +48,7 @@ const props = defineProps({
 
 const emit = defineEmits(["onsubmit"]);
 
-let form= ref({ productLine: null, textDesc: "", htmlDesc: "", imageUrl: ""});
+let form= ref({ productLine: null, textDescription: "", htmlDescription: "", imageUrl: ""});
 let errors = ref([]);
 
 onMounted(async () => {
@@ -76,8 +76,8 @@ watch(props, () => {
         .fetchById(props.pline)
         .then((res) => {
           form.value.productLine = res.data.productLine;
-          form.value.textDesc = res.data.textDesc;
-          form.value.htmlDesc = res.data.htmlDesc;
+          form.value.textDescription = res.data.textDescription;
+          form.value.htmlDescription = res.data.htmlDescription;
           form.value.imageUrl = res.data.imageUrl;
         })
         .catch((err) => console.log(err));

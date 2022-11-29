@@ -100,12 +100,12 @@ function deleteProductLine() {
 function updateProductLineData(form) {
   var data = {
     productLine: form.productLine,
-    textDesc: form.textDesc,
-    htmlDesc: form.htmlDesc,
+    textDescription: form.textDescription,
+    htmlDescription: form.htmlDescription,
     imageUrl: form.imageUrl,
   };
   createEndpoint(ENDPOINTS.PRODUCTLINE)
-    .update(form.value.productLine, data)
+    .update(form.productLine, data)
     .then((res) => {
       console.log(res.data);
       msg.value = "Record updated successfully!";
@@ -116,8 +116,8 @@ function updateProductLineData(form) {
 function addProductLineData(form) {
   var data = {
     productLine: form.productLine,
-    textDesc: form.textDesc,
-    htmlDesc: form.htmlDesc,
+    textDescription: form.textDescription,
+    htmlDescription: form.htmlDescription,
     imageUrl: form.imageUrl,
   };
 
