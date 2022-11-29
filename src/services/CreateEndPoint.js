@@ -7,7 +7,7 @@ export const ENDPOINTS = {
   ORDER: "order",
   PRODUCTLINE: "productline",
   PRODUCT: "product",
-  ORDER_CUSTOMER: "order/customer",
+  ORDER_CUSTOMER: "order-customer",
   PAYMENT: "payment",
 };
 export const createEndpoint = (endpoint) => {
