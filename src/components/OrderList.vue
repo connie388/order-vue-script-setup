@@ -34,7 +34,10 @@
       <br />
       <BaseButton
         className="btn-green"
-        @click="visibleOrderAdd = true"
+        @click="
+          visibleOrderAdd = true;
+          orderNumber = null;
+        "
         label="+Add Order"
       />
     </div>
@@ -208,8 +211,7 @@ function addOrderData(form) {
   createEndpoint(ENDPOINTS.ORDER)
     .create(data)
     .then((res) => {
-      console.log(res.data);
-      orderNumber = res.data.orderNumber;
+      orderNumber.value = res.data.orderNumber;
       msg.value = "Order is added successfully!";
       retrieveOrdersByNameAndDateRange();
     })

@@ -22,7 +22,8 @@
           <!-- :fields="props.fields.filter(item => item.visible) -->
           <th
             scope="col"
-            class="text-right px-6 py-3 text-xs font-bold uppercase"
+            :class="field.type == 'number' ? 'text-right' : 'text-left'"
+            class="px-6 py-3 text-xs font-bold uppercase"
             v-for="field in props.fields"
             :key="field.column"
           >
@@ -79,7 +80,7 @@
             </td>
           </div>
           <td
-            class="text-right px-6 py-4 text-xs font-medium text-gray-800 whitespace-nowrap"
+            class="px-6 py-4 text-xs font-medium text-gray-800 whitespace-nowrap"
             v-for="field in props.fields"
             :key="field.column"
             @click="onclick(item, index)"
@@ -87,7 +88,11 @@
             <BaseInput
               id="item[field.column]"
               type="field.type"
-              className="field-input text-right"
+              :className="
+                field.type == 'number'
+                  ? 'field-input text-right'
+                  : 'field-input text-left'
+              "
               v-model="item[field.column]"
             />
           </td>

@@ -95,7 +95,7 @@ import { ORDER_STATUS } from "@/components/OrderStatus";
 import { defineProps, defineEmits, ref, onMounted } from "vue";
 
 const props = defineProps({
-  orderNumber: String,
+  orderNumber: Number,
 });
 
 const emit = defineEmits(["onSubmit"]);
@@ -175,7 +175,8 @@ function onsubmit(e) {
     return;
   }
 
-  form.value.orderDetailList = getTableItems();
+  form.value.orderDetailList = getTableItems().value;
+  console.log("order detail=" + form.value.orderDetailList);
   e.preventDefault();
   emit("onSubmit", form.value);
 }
