@@ -119,7 +119,7 @@ let form = ref({
   state: "",
   country: "",
   postalCode: "",
-  salesRepEmployeeNumber: "",
+  salesRepEmployeeNumber: null,
   creditLimit: null,
 });
 let errors = ref([]);

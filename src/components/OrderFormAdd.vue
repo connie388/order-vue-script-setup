@@ -68,22 +68,10 @@
       </div>
     </div>
   </form>
-
-  <BaseModal
-    :showing="visibleMsgView"
-    modalContainerClass="modal-notify-container"
-    modalContentClass="modal-notify-content"
-    @close="visibleMsgView = false"
-  >
-    <template v-slot:body>
-      <p>{{ msg }}</p>
-    </template>
-  </BaseModal>
 </template>
 
 <script setup>
 import BaseErrors from "../layouts/BaseErrors.vue";
-import BaseModal from "../layouts/BaseModal.vue";
 import BaseTextArea from "../layouts/BaseTextArea.vue";
 import BaseButton from "../layouts/BaseButton.vue";
 import BaseLabel from "../layouts/BaseLabel.vue";
@@ -114,8 +102,6 @@ let form = ref({
 });
 let errors = ref([]);
 
-let visibleMsgView = ref(false);
-let msg = ref("");
 let orderDetailFields = ref([
   { column: "productCode", header: "Product Code", type: "text" },
   { column: "quantityOrdered", header: "Quantity", type: "number" },

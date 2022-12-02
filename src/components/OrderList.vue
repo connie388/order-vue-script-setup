@@ -97,6 +97,7 @@
     :showing="visibleMsgView"
     modalContainerClass="modal-notify-container"
     modalContentClass="modal-notify-content"
+    :closeButtonEnable="true"
     @close="visibleMsgView = false"
   >
     <template v-slot:body>

@@ -58,7 +58,7 @@
   }
 
   .modal-notify-content {
-    @apply overflow-auto rounded-3xl bg-white flex flex-col justify-between w-2/6 h-2/6;
+    @apply overflow-auto rounded-3xl bg-white flex flex-col justify-between w-2/6 h-64;
   }
 }
 .active {

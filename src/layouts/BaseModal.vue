@@ -17,10 +17,12 @@
           <slot name="body"></slot>
         </main>
 
-        <!-- <footer class="px-4 py-6 border-t-2 border-white">
+        <footer class="px-4 py-6 border-t-2 border-white">
           <slot name="footer"></slot>
-          <BaseButton @click.prevent="close" label="Close" />
-        </footer> -->
+          <div v-if="closeButtonEnable">
+            <BaseButton @click.prevent="close" label="Close" />
+          </div>
+        </footer>
       </div>
     </div>
   </Transition>
@@ -43,6 +45,11 @@ const props = defineProps({
   showing: {
     required: true,
     type: Boolean,
+  },
+  closeButtonEnable: {
+    required: false,
+    type: Boolean,
+    default: false,
   },
 });
 function close() {
