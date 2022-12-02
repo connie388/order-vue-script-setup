@@ -52,6 +52,7 @@ let form= ref({ productLine: null, textDescription: "", htmlDescription: "", ima
 let errors = ref([]);
 
 onMounted(async () => {
+  if (props.pline)
   getProductLine();
 });
 

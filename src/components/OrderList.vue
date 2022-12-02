@@ -62,7 +62,11 @@
     >
 
     <template v-slot:body>
-      <OrderFormAdd :orderNumber="orderNumber" @onSubmit="addOrderData" />
+      <OrderFormAdd
+        :orderNumber="orderNumber"
+        @onSubmit="addOrderData"
+        @onClose="visibleOrderAdd = false"
+      />
     </template>
 
     <!-- <template v-slot:footer> <BaseButton label="Add" /></template> -->
@@ -75,24 +79,12 @@
     >
 
     <template v-slot:body>
-      <OrderFormEdit :order="selectedOrder" @onSubmit="updateOrderData" />
+      <OrderFormEdit :order="selectedOrder" @onSubmit="updateOrderData"     @onClose="visibleOrderEdit = false"/>
     </template>
 
     <!-- <template v-slot:footer> <BaseButton label="Add" /></template> -->
   </BaseModal>
-  <BaseModal :showing="visibleOrderView" @close="visibleOrderView = false">
-    <template v-slot:header
-      ><h1 class="text-xl font-bold text-center">
-        Order Information
-      </h1></template
-    >
 
-    <template v-slot:body>
-      <OrderFormView :order="selectedOrder" />
-    </template>
-
-    <!-- <template v-slot:footer> <BaseButton label="Add" /></template> -->
-  </BaseModal>
   <BaseModal
     :showing="visibleMsgView"
     modalContainerClass="modal-notify-container"
@@ -111,7 +103,6 @@ import BaseButton from "../layouts/BaseButton.vue";
 import BaseInput from "../layouts/BaseInput.vue";
 import BaseViewTable from "../layouts/BaseViewTable.vue";
 import BaseModal from "../layouts/BaseModal";
-import OrderFormView from "./OrderFormView";
 import OrderFormEdit from "./OrderFormEdit";
 import OrderFormAdd from "./OrderFormAdd";
 import { createEndpoint, ENDPOINTS } from "@/services/CreateEndPoint";
@@ -121,7 +112,6 @@ let searchCustomerName = ref("");
 let searchOrderFromDate = ref(null);
 let searchOrderToDate = ref(null);
 let orders = ref([]);
-let visibleOrderView = ref(false);
 let visibleOrderEdit = ref(false);
 let visibleOrderAdd = ref(false);
 let visibleMsgView = ref(false);

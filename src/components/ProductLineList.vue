@@ -13,9 +13,17 @@
       />
     </div>
     <div class="w-3/4">
-      <div>
-        <p>{{ msg }}</p>
-      </div>
+      <BaseModal
+        :showing="visibleMsgView"
+        modalContainerClass="modal-notify-container"
+        modalContentClass="modal-notify-content"
+        :closeButtonEnable="true"
+        @close="visibleMsgView = false"
+      >
+        <template v-slot:body>
+          <p>{{ msg }}</p>
+        </template>
+      </BaseModal>
       <div v-if="newRecord">
         <BaseHeader label="New Product Line" />
         <ProductLineForm @onsubmit="addProductLineData" />
@@ -45,6 +53,7 @@ import BaseHeader from "../layouts/BaseHeader.vue";
 import BaseButton from "../layouts/BaseButton.vue";
 import ProductLineForm from "./ProductLineForm";
 import BaseList from "../layouts/BaseList.vue";
+import BaseModal from "../layouts/BaseModal.vue";
 import { createEndpoint, ENDPOINTS } from "@/services/CreateEndPoint";
 import { ref, onMounted } from "vue";
 
@@ -52,6 +61,7 @@ let productlines = ref([]);
 let currentProductLine = ref(null);
 let newRecord = ref(false);
 let msg = ref("");
+let visibleMsgView = ref(false);
 
 onMounted(async () => {
   retrieveProductLines();
@@ -60,12 +70,14 @@ onMounted(async () => {
 function setActiveProductLine(option) {
   currentProductLine.value = option.key;
   msg.value = "";
+  visibleMsgView.value = false;
   newRecord.value = false;
 }
 
 function setNewRecord() {
   newRecord.value = true;
   msg.value = "";
+  visibleMsgView.value = false;
   currentProductLine.value = null;
 }
 
@@ -91,6 +103,7 @@ function deleteProductLine() {
     .then((res) => {
       console.log(res.data);
       msg.value = "Record deleted successfully!";
+      visibleMsgView.value = true;
       currentProductLine.value = null;
       retrieveProductLines();
     })
@@ -109,6 +122,7 @@ function updateProductLineData(form) {
     .then((res) => {
       console.log(res.data);
       msg.value = "Record updated successfully!";
+      visibleMsgView.value = true;
     })
     .catch((err) => console.log(err));
 }
@@ -127,6 +141,7 @@ function addProductLineData(form) {
       console.log(res.data);
       retrieveProductLines();
       msg.value = "Record added successfully!";
+      visibleMsgView.value = true;
       newRecord.value = false;
     })
     .catch((err) => console.log(err));

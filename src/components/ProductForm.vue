@@ -92,7 +92,7 @@ let errors = ref([]);
 
 // for first time click
 onMounted(async () => {
-  getProduct();
+  if (props.productCode) getProduct();
 });
 
 // when click different item

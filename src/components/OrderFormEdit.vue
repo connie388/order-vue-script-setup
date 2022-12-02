@@ -86,7 +86,8 @@
               :editEnable="false"
               :addRow="true"
             />
-            <BaseButton @click="submitEvent" label="Submit" />
+            <BaseButton @click="submitEvent" label="Submit" class="mr-2" />
+            <BaseButton @click="onclose" label="Close" />
           </div>
           <div v-else>
             <BaseViewTable
@@ -97,6 +98,7 @@
               :deleteEnable="false"
               :filterEnable="false"
             />
+            <BaseButton @click="onclose" label="Close" />
           </div>
         </div>
       </div>
@@ -120,7 +122,7 @@ const props = defineProps({
   order: Object,
 });
 
-const emit = defineEmits(["onsubmit"]);
+const emit = defineEmits(["onsubmit", "onClose"]);
 
 let form = ref({
   customerName: "",
@@ -246,5 +248,9 @@ function submitEvent(e) {
   form.value.orderDetailList = getTableItems();
   e.preventDefault();
   emit("onsubmit", form.value);
+}
+
+function onclose() {
+  emit("onClose");
 }
 </script>

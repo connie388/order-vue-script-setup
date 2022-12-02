@@ -65,6 +65,7 @@
         :edit="false"
         :customerList="customerList"
         @onSubmit="addPayment"
+        @onClose="visiblePaymentAdd = false"
       />
     </template>
 
@@ -83,6 +84,7 @@
         :customerName="searchCustomerName"
         :edit="true"
         @onSubmit="updatePayment"
+        @onClose="visiblePaymentEdit = false"
       />
     </template>
 

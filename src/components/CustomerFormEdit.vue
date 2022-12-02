@@ -90,7 +90,9 @@
         />
       </div>
     </div>
-    <BaseButton @click="onsubmit" label="Submit" />
+
+    <BaseButton @click="onsubmit" label="Submit" class="mr-2" />
+    <BaseButton @click="onclose" label="Close" />
   </form>
 </template>
 <script setup>
@@ -105,7 +107,7 @@ const props = defineProps({
   edit: String,
 });
 
-const emit = defineEmits(["onsubmit"]);
+const emit = defineEmits(["onsubmit", "onClose"]);
 
 let form = ref({
   customerNumber: null,
@@ -177,5 +179,9 @@ function onsubmit(e) {
 
   e.preventDefault();
   emit("onsubmit", form.value);
+}
+
+function onclose() {
+  emit("onClose");
 }
 </script>

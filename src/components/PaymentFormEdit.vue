@@ -27,7 +27,8 @@
 
     <BaseInput id="amount" type="number" label="Amount" v-model="form.amount" />
 
-    <BaseButton @click="onsubmit" label="Submit" />
+    <BaseButton @click="onsubmit" label="Submit" class="mr-2" />
+    <BaseButton @click="onclose" label="Close" />
   </form>
 </template>
 <script setup>
@@ -54,7 +55,7 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["onSubmit"]);
+const emit = defineEmits(["onSubmit", "onClose"]);
 
 let form = ref({
   customerNumber: null,
@@ -98,5 +99,9 @@ function onsubmit(e) {
 
   e.preventDefault();
   emit("onSubmit", form.value);
+}
+
+function onclose() {
+  emit("onClose");
 }
 </script>

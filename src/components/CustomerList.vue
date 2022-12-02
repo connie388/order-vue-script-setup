@@ -34,7 +34,10 @@
     >
 
     <template v-slot:body>
-      <CustomerFormEdit @onsubmit="addCustomerData" />
+      <CustomerFormEdit
+        @onsubmit="addCustomerData"
+        @onClose="visibleCustomerAdd = false"
+      />
     </template>
   </BaseModal>
 
@@ -51,6 +54,7 @@
     <template v-slot:body>
       <CustomerFormEdit
         :customer="selectedCustomer"
+        @onClose="visibleCustomerView = false"
         @onsubmit="updateCustomerData"
       />
     </template>
@@ -114,7 +118,6 @@ function retrieveCustomersByName() {
     .fetchByName(searchCustomerName.value)
     .then((res) => {
       customers.value = res.data;
-      console.log(customers.value);
       if (res.data.length === 0) {
         msg.value = "No customers found.";
         visibleMsgView.value = true;

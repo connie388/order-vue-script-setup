@@ -29,6 +29,7 @@
 </template>
 
 <script setup>
+import BaseButton from "../layouts/BaseButton.vue";
 import { defineProps, defineEmits } from "vue";
 const emit = defineEmits(["close"]);
 const props = defineProps({

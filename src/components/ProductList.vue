@@ -23,9 +23,17 @@
       />
     </div>
     <div class="w-3/4">
-      <div>
-        <p>{{ msg }}</p>
-      </div>
+      <BaseModal
+        :showing="visibleMsgView"
+        modalContainerClass="modal-notify-container"
+        modalContentClass="modal-notify-content"
+        :closeButtonEnable="true"
+        @close="visibleMsgView = false"
+      >
+        <template v-slot:body>
+          <p>{{ msg }}</p>
+        </template>
+      </BaseModal>
       <div v-if="newRecord">
         <BaseHeader label="New Product" />
         <ProductForm :productlines="productlines" @onsubmit="addProductData" />
@@ -56,6 +64,7 @@ import BaseHeader from "../layouts/BaseHeader.vue";
 import BaseButton from "../layouts/BaseButton.vue";
 import BaseDropdown from "../layouts/BaseDropdown.vue";
 import BaseList from "../layouts/BaseList.vue";
+import BaseModal from "../layouts/BaseModal.vue";
 import ProductForm from "./ProductForm";
 import { createEndpoint, ENDPOINTS } from "@/services/CreateEndPoint";
 import { ref, onMounted } from "vue";
@@ -67,6 +76,7 @@ let newRecord = ref(false);
 let searchProductLine = ref("");
 let reset = ref(false);
 let msg = ref("");
+let visibleMsgView = ref(false);
 
 onMounted(async () => {
   retrieveProductLines();
@@ -75,6 +85,7 @@ onMounted(async () => {
 function setActiveProduct(option) {
   currentProductCode.value = option.key;
   msg.value = "";
+  visibleMsgView.value = false;
   newRecord.value = false;
 }
 
@@ -97,6 +108,7 @@ function retrieveProductLines() {
 function setNewRecord() {
   newRecord.value = true;
   msg.value = "";
+  visibleMsgView.value = false;
   currentProductCode.value = null;
 }
 
@@ -128,6 +140,7 @@ function deleteProduct() {
     .then((res) => {
       console.log(res.data);
       msg.value = "Record deleted successfully!";
+      visibleMsgView.value = true;
       currentProductCode.value = null;
       if (searchProductLine.value) findByProductLine();
     })
@@ -151,6 +164,7 @@ function updateProductData(form) {
     .then((res) => {
       console.log(res.data);
       msg.value = "Record updated successfully!";
+      visibleMsgView.value = true;
     })
     .catch((err) => console.log(err));
 }
@@ -174,6 +188,7 @@ function addProductData(form) {
       console.log(res.data);
       if (searchProductLine.value) findByProductLine();
       msg.value = "Record added successfully!";
+      visibleMsgView.value = true;
       newRecord.value = false;
     })
     .catch((err) => console.log(err));

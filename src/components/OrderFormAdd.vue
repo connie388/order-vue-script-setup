@@ -64,7 +64,9 @@
           :editEnable="false"
           :addRow="true"
         />
-        <BaseButton @click="onsubmit" label="Submit" />
+
+        <BaseButton @click="onsubmit" label="Submit" class="mr-2" />
+        <BaseButton @click="onclose" label="Close" />
       </div>
     </div>
   </form>
@@ -86,7 +88,7 @@ const props = defineProps({
   orderNumber: Number,
 });
 
-const emit = defineEmits(["onSubmit"]);
+const emit = defineEmits(["onSubmit", "onClose"]);
 
 let customerList = ref([]);
 let form = ref({
@@ -165,5 +167,9 @@ function onsubmit(e) {
   console.log("order detail=" + form.value.orderDetailList);
   e.preventDefault();
   emit("onSubmit", form.value);
+}
+
+function onclose() {
+  emit("onClose");
 }
 </script>
