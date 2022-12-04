@@ -60,23 +60,18 @@
     </template>
   </BaseModal>
 
-  <BaseModal
-    :showing="visibleMsgView"
-    modalContainerClass="modal-notify-container"
-    modalContentClass="modal-notify-content"
-    :closeButtonEnable="true"
-    @close="visibleMsgView = false"
-  >
-    <template v-slot:body>
-      <p>{{ msg }}</p>
-    </template>
-  </BaseModal>
+  <NotificationModal
+    :show="visibleMsgView"
+    :msg="msg"
+    @close="this.visibleMsgView = false"
+  />
 </template>
 
 <script setup>
 import BaseButton from "../layouts/BaseButton.vue";
 import BaseInput from "../layouts/BaseInput.vue";
 import BaseModal from "../layouts/BaseModal.vue";
+import NotificationModal from "./NotificationModal.vue";
 import BaseViewTable from "../layouts/BaseViewTable.vue";
 import CustomerFormEdit from "./CustomerFormEdit.vue";
 

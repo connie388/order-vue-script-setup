@@ -151,10 +151,7 @@ const orderDetailFields = ref([
   },
 ]);
 
-const childRef = ref(null);
-const getTableItems = () => {
-  return childRef.value?.tableItems;
-};
+const childRef = ref();
 
 onMounted(async () => {
   if (props.order) {
@@ -245,7 +242,7 @@ function submitEvent(e) {
     return;
   }
 
-  form.value.orderDetailList = getTableItems();
+  form.value.orderDetailList = childRef.value?.getTableItems();
   e.preventDefault();
   emit("onsubmit", form.value);
 }

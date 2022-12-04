@@ -123,7 +123,7 @@
 <script setup>
 import BaseInput from "./BaseInput.vue";
 import BaseButton from "./BaseButton.vue";
-import { defineProps, defineEmits, ref, watch } from "vue";
+import { defineProps, defineEmits, defineExpose, ref, watch } from "vue";
 
 const props = defineProps({
   addRow: {
@@ -181,4 +181,11 @@ function addNewRecord() {
   const newRow = props.fields.reduce((a) => ({ ...a }), {});
   tableItems.value?.unshift(newRow);
 }
+const getTableItems = () => {
+  return tableItems.value;
+};
+
+defineExpose({
+  getTableItems,
+});
 </script>

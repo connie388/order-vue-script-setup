@@ -79,23 +79,21 @@
     >
 
     <template v-slot:body>
-      <OrderFormEdit :order="selectedOrder" @onSubmit="updateOrderData"     @onClose="visibleOrderEdit = false"/>
+      <OrderFormEdit
+        :order="selectedOrder"
+        @onsubmit="updateOrderData"
+        @onClose="visibleOrderEdit = false"
+      />
     </template>
 
     <!-- <template v-slot:footer> <BaseButton label="Add" /></template> -->
   </BaseModal>
 
-  <BaseModal
-    :showing="visibleMsgView"
-    modalContainerClass="modal-notify-container"
-    modalContentClass="modal-notify-content"
-    :closeButtonEnable="true"
-    @close="visibleMsgView = false"
-  >
-    <template v-slot:body>
-      <p>{{ msg }}</p>
-    </template>
-  </BaseModal>
+  <NotificationModal
+    :show="visibleMsgView"
+    :msg="msg"
+    @close="this.visibleMsgView = false"
+  />
 </template>
 
 <script setup>
@@ -103,6 +101,7 @@ import BaseButton from "../layouts/BaseButton.vue";
 import BaseInput from "../layouts/BaseInput.vue";
 import BaseViewTable from "../layouts/BaseViewTable.vue";
 import BaseModal from "../layouts/BaseModal";
+import NotificationModal from "./NotificationModal.vue";
 import OrderFormEdit from "./OrderFormEdit";
 import OrderFormAdd from "./OrderFormAdd";
 import { createEndpoint, ENDPOINTS } from "@/services/CreateEndPoint";
