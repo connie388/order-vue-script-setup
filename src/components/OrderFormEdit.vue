@@ -28,7 +28,7 @@
         </div>
         <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
           <BaseDropdown
-            :initialOption="{ key: order.status, text: order.status }"
+            :initialOption="initialOption"
             id="status"
             :options="options"
             label="Status"
@@ -140,6 +140,7 @@ let errors = ref([]);
 let options = ref([]);
 let orderDetails = ref([]);
 let editable = ref(false);
+let initialOption = ref(null);
 
 const orderDetailFields = ref([
   { column: "productCode", header: "Product Code", type: "text" },
@@ -157,45 +158,7 @@ const childRef = ref();
 onMounted(async () => {
   if (props.order) {
     // watch the props to fetch the data again
-    if (props.order.status === ORDER_STATUS.SHIPPED) {
-      options.value = [
-        { key: ORDER_STATUS.SHIPPED, text: ORDER_STATUS.SHIPPED },
-        { key: ORDER_STATUS.CANCELLED, text: ORDER_STATUS.CANCELLED },
-        { key: ORDER_STATUS.DISPUTED, text: ORDER_STATUS.DISPUTED },
-      ];
-    }
-    if (props.order.status === ORDER_STATUS.IN_PROCESS) {
-      options.value = [
-        { key: ORDER_STATUS.IN_PROCESS, text: ORDER_STATUS.IN_PROCESS },
-        { key: ORDER_STATUS.SHIPPED, text: ORDER_STATUS.SHIPPED },
-        { key: ORDER_STATUS.CANCELLED, text: ORDER_STATUS.CANCELLED },
-        { key: ORDER_STATUS.ON_HOLD, text: ORDER_STATUS.ON_HOLD },
-      ];
-    }
-    if (props.order.status === ORDER_STATUS.ON_HOLD) {
-      options.value = [
-        { key: ORDER_STATUS.ON_HOLD, text: ORDER_STATUS.ON_HOLD },
-        { key: ORDER_STATUS.IN_PROCESS, text: ORDER_STATUS.IN_PROCESS },
-        { key: ORDER_STATUS.CANCELLED, text: ORDER_STATUS.CANCELLED },
-      ];
-    }
-    if (props.order.status == ORDER_STATUS.CANCELLED) {
-      options.value = [
-        { key: ORDER_STATUS.CANCELLED, text: ORDER_STATUS.CANCELLED },
-      ];
-    }
-    if (props.order.status == ORDER_STATUS.DISPUTED) {
-      options.value = [
-        { key: ORDER_STATUS.DISPUTED, text: ORDER_STATUS.DISPUTED },
-        { key: ORDER_STATUS.RESOLVED, text: ORDER_STATUS.RESOLVED },
-      ];
-    }
-    if (props.order.status == ORDER_STATUS.RESOLVED) {
-      options.value = [
-        { key: ORDER_STATUS.RESOLVED, text: ORDER_STATUS.RESOLVED },
-        { key: ORDER_STATUS.DISPUTED, text: ORDER_STATUS.DISPUTED },
-      ];
-    }
+    setOptions(props.order.status);
     form.value.orderNumber = props.order.orderNumber;
     form.value.orderDate = props.order.orderDate;
     form.value.requiredDate = props.order.requiredDate;
@@ -204,15 +167,58 @@ onMounted(async () => {
     form.value.comments = props.order.comments;
     form.value.customerNumber = props.order.customerNumber;
     form.value.customerName = props.order.customerName;
-    // console.log("name=" + this.order.customerName);
   }
   if (props.order.orderNumber) retrieveOrderDetail(props.order.orderNumber);
 
   if (props.order.status === ORDER_STATUS.IN_PROCESS) editable.value = true;
 });
 
+function setOptions(status) {
+  if (status === ORDER_STATUS.SHIPPED) {
+    options.value = [
+      { key: ORDER_STATUS.SHIPPED, text: ORDER_STATUS.SHIPPED },
+      { key: ORDER_STATUS.CANCELLED, text: ORDER_STATUS.CANCELLED },
+      { key: ORDER_STATUS.DISPUTED, text: ORDER_STATUS.DISPUTED },
+    ];
+  }
+  if (status === ORDER_STATUS.IN_PROCESS) {
+    options.value = [
+      { key: ORDER_STATUS.IN_PROCESS, text: ORDER_STATUS.IN_PROCESS },
+      { key: ORDER_STATUS.SHIPPED, text: ORDER_STATUS.SHIPPED },
+      { key: ORDER_STATUS.CANCELLED, text: ORDER_STATUS.CANCELLED },
+      { key: ORDER_STATUS.ON_HOLD, text: ORDER_STATUS.ON_HOLD },
+    ];
+  }
+  if (status === ORDER_STATUS.ON_HOLD) {
+    options.value = [
+      { key: ORDER_STATUS.ON_HOLD, text: ORDER_STATUS.ON_HOLD },
+      { key: ORDER_STATUS.IN_PROCESS, text: ORDER_STATUS.IN_PROCESS },
+      { key: ORDER_STATUS.CANCELLED, text: ORDER_STATUS.CANCELLED },
+    ];
+  }
+  if (status == ORDER_STATUS.CANCELLED) {
+    options.value = [
+      { key: ORDER_STATUS.CANCELLED, text: ORDER_STATUS.CANCELLED },
+    ];
+  }
+  if (status == ORDER_STATUS.DISPUTED) {
+    options.value = [
+      { key: ORDER_STATUS.DISPUTED, text: ORDER_STATUS.DISPUTED },
+      { key: ORDER_STATUS.RESOLVED, text: ORDER_STATUS.RESOLVED },
+    ];
+  }
+  if (status == ORDER_STATUS.RESOLVED) {
+    options.value = [
+      { key: ORDER_STATUS.RESOLVED, text: ORDER_STATUS.RESOLVED },
+      { key: ORDER_STATUS.DISPUTED, text: ORDER_STATUS.DISPUTED },
+    ];
+  }
+  initialOption.value = { key: status, text: status };
+}
+
 function setStatus(option) {
   form.value.status = option.key;
+  initialOption.value = { key: option.key, text: option.key };
 }
 
 function retrieveOrderDetail(orderNumber) {
